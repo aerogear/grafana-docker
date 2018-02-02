@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "Building latest for master"
+echo "Building aerogear/gafana:latest"
 docker build \
 	--build-arg DOWNLOAD_URL=$DOWNLOAD_URL \
-	--tag "aerogear/grafana:master" \
+	--tag "aerogear/grafana:latest" \
 	--no-cache=true .
 

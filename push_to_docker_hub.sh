@@ -1,5 +1,5 @@
 #!/bin/bash
 
-echo "pushing aerogear/grafana:master"
-docker push aerogear/grafana:master
+echo "pushing aerogear/grafana:latest"
+docker push aerogear/grafana:latest
 
