@@ -13,6 +13,10 @@ RUN apt-get update && \
 
 VOLUME ["/var/lib/grafana", "/var/log/grafana", "/etc/grafana"]
 
+
+COPY grafana-piechart-panel /tmp/grafana-piechart-panel
+COPY grafana-worldmap-panel /tmp/grafana-worldmap-panel
+
 EXPOSE 3000
 
 COPY ./run.sh /run.sh

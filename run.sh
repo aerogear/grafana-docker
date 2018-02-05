@@ -1,18 +1,15 @@
 #!/bin/bash -e
 
 : "${GF_PATHS_CONFIG:=/etc/grafana/grafana.ini}"
-: "${GF_PATHS_DATA:=/var/lib/grafana}"
-: "${GF_PATHS_LOGS:=/var/log/grafana}"
-: "${GF_PATHS_PLUGINS:=/var/lib/grafana/plugins}"
-: "${GF_PATHS_PROVISIONING:=/etc/grafana/provisioning}"
 
-if [ ! -z "${GF_INSTALL_PLUGINS}" ]; then
-  OLDIFS=$IFS
-  IFS=','
-  for plugin in ${GF_INSTALL_PLUGINS}; do
-    IFS=$OLDIFS
-    grafana-cli --pluginsDir "${GF_PATHS_PLUGINS}" plugins install ${plugin}
-  done
+if [ ! -d /var/lib/grafana/plugins ]; then
+  mkdir -p /var/lib/grafana/plugins
 fi
+
+# Copying the plugin files to /tmp and then cp'ing them here seems to be the only way to get this to work
+# using COPY commands in the Dockerfile didn't work
+
+cp -r /tmp/grafana-piechart-panel/ /var/lib/grafana/plugins/grafana-piechart-panel
+cp -r /tmp/grafana-worldmap-panel/ /var/lib/grafana/plugins/grafana-worldmap-panel
 
 /usr/sbin/grafana-server --homepath=/usr/share/grafana --config="$GF_PATHS_CONFIG"
